@@ -8,11 +8,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { NavbarBrand } from "./navbar-brand";
 import { RootTabs } from "./root-tabs";
 import React from "react";
+import { useSession } from "next-auth/react";
 
 export const Navbar = () => {
+  const { data: session } = useSession();
+
   return (
     <nav className="fixed top-0 w-full backdrop-blur-lg">
       {/* Navbar */}
@@ -21,10 +25,27 @@ export const Navbar = () => {
           {/* Brand */}
           <NavbarBrand />
 
-          {/* Menu button */}
-          <SheetTrigger className="">
-            <HiBars2 className="text-primary text-2xl" />
-          </SheetTrigger>
+          <div className="flex items-center">
+            {
+              // If the user is not logged in, do not show the avatar
+              session && (
+                <Avatar className="mr-2 w-8 h-8">
+                  <AvatarImage src={session.user.image} />
+                  <AvatarFallback>{session.user.name.substring(1, 1)}</AvatarFallback>
+                </Avatar>
+              )
+            }
+            {/* <Avatar className="mr-2"
+            >
+              <AvatarImage src="https://api.dicebear.com/9.x/pixel-art/svg" className="h-10"/>
+              <AvatarFallback>JD</AvatarFallback>
+            </Avatar> */}
+
+            {/* Menu button */}
+            <SheetTrigger className="">
+              <HiBars2 className="text-primary text-2xl" />
+            </SheetTrigger>
+          </div>
 
           {/* Menu content */}
           <SheetContent side="top">

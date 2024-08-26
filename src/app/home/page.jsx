@@ -1,15 +1,20 @@
-import { Input } from "@/components/custom/inputs/input";
-
 import { PageContainer } from "@/components/custom/container/page-container";
-import { NewLinkForm } from "./components/new-link-form";
-import { LinkList } from "./components/link-list";
+import { LinkManager } from "./components/link-manager";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/constants/authOptions";
+import { fetchUserLinks } from "@/lib/data";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const session = await getServerSession(authOptions);
+
+  let initialLinks = [];
+  if (session) {
+    initialLinks = await fetchUserLinks(session.user.id);
+  }
+
   return (
     <PageContainer sectionClassName="px-2">
-      <NewLinkForm />
-
-      <LinkList />
+      <LinkManager initialLinks={initialLinks}/>
     </PageContainer>
   );
 }

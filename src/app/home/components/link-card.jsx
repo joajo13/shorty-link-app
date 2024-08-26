@@ -2,60 +2,87 @@
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import {
-  HiArrowTopRightOnSquare,
+  HiOutlinePencil,
   HiOutlineShare,
   HiQrCode,
+  HiArrowTopRightOnSquare,
 } from "react-icons/hi2";
+import { RenameLinkButton } from "./rename-link-button";
+import { IconButton } from "../../../components/custom/buttons/icon-button";
+import { DeleteButton } from "@/components/custom/buttons/delete-button";
 
+// Main component to display a link card
 export const LinkCard = ({ link }) => {
   return (
     <Card>
       <CardHeader className="flex flex-row justify-between items-center">
-        <div className="flex justify-start items-center gap-5">
-          <img
-            src={link.favicon}
-            alt="favicon"
-            className="w-6 h-6 rounded-md"
-          />
+        {/* Component to display link information */}
+        <LinkInfo
+          customLink={link.customUrl}
+          originalLink={link.url}
+          faviconSrc={link.faviconUrl}
+        />
 
-          <div className="flex flex-col gap-2">
-            <CardTitle>{link.customLink}</CardTitle>
-            <CardDescription>{link.originalLink}</CardDescription>
-          </div>
-        </div>
-
-        <Button variant="outline" size="icon" className="mt-0 rounded-full">
-          <HiArrowTopRightOnSquare size={20} />
-        </Button>
+        {/* Open link button */}
+        <IconButton
+          Icon={HiArrowTopRightOnSquare}
+          buttonClassName={"rounded-full"}
+        />
       </CardHeader>
 
-      <CardFooter className="gap-2 justify-between">
-        <div className="flex justify-start items-center gap-2">
-          <Button variant="outline">Rename</Button>
-
-          <Button variant="outline" size="icon">
-            <HiQrCode size={20} />
-          </Button>
-
-          <Button variant="outline" size="icon" className="border-app-accent">
-            <HiOutlineShare size={20} className="text-app-accent"/>
-          </Button>
-        </div>
-
-        <Button
-          variant="ghost"
-          className="text-destructive hover:bg-destructive/10 hover:text-destructive"
-        >
-          Delete
-        </Button>
+      <CardFooter>
+        {/* Component to display action buttons */}
+        <LinkActions />
       </CardFooter>
     </Card>
+  );
+};
+
+// Component to display link information
+const LinkInfo = ({ faviconSrc, customLink, originalLink }) => {
+  return (
+    <div className="flex justify-start items-center gap-5">
+      <img src={faviconSrc} alt="favicon" className="w-6 h-6 rounded-md" />
+
+      <div className="flex flex-col gap-2">
+        <CardTitle>{customLink}</CardTitle>
+        <CardDescription>{originalLink}</CardDescription>
+      </div>
+    </div>
+  );
+};
+
+// Component to display action buttons
+const LinkActions = () => {
+  return (
+    <div className="gap-2 justify-between flex items-center w-full">
+      <div className="flex justify-start items-center gap-2">
+        {/* Button to rename the link */}
+        <RenameLinkButton />
+
+        {/* Button to generate QR code */}
+        <IconButton Icon={HiQrCode} />
+
+        {/* Button to edit the link */}
+        <IconButton Icon={HiOutlinePencil} />
+
+        {/* Button to share the link */}
+        <IconButton
+          buttonClassName={
+            "text-app-accent border-app-accent hover:bg-app-accent/10 hover:text-app-accent"
+          }
+          Icon={HiOutlineShare}
+        />
+      </div>
+
+      {/* Button to delete the link */}
+      <DeleteButton />
+    </div>
   );
 };
