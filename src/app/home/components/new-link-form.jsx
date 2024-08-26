@@ -1,7 +1,5 @@
 "use client";
-import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/custom/inputs/input";
-import { InfoPopover } from "@/components/custom/popovers/info-popover";
 import { GenerateLinkButton } from "./generate-link-button";
 import { useForm, Controller } from "react-hook-form";
 import { useCreateLink } from "@/hooks/link/useCreateLink";

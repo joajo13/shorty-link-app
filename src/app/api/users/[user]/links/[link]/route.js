@@ -1,3 +1,4 @@
+import { prisma } from "@/lib/prisma";
 import { validateUserExistance } from "@/utils/user/validateUserExistance";
 import { validateUserSession } from "@/utils/user/validateUserSession";
 import { NextResponse } from "next/server";
