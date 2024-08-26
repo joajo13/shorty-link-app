@@ -11,9 +11,7 @@ export async function GET(req, { params }) {
         console.log('userId', userId);
 
         const validateSession = await validateUserSession(userId);
-
-        console.log('validateSession', validateSession);
-
+        
         if (!validateSession.isValid) {
             return NextResponse.json({
                 error: validateSession.error
@@ -23,8 +21,6 @@ export async function GET(req, { params }) {
         }
 
         const validateExistance = await validateUserExistance(userId);
-
-        console.log('validateExistance', validateExistance);
 
         if (!validateExistance.isValid) {
             return NextResponse.json({
@@ -39,6 +35,7 @@ export async function GET(req, { params }) {
                 userId: userId
             },
             select: {
+                id: true,
                 url: true,
                 customUrl: true,
                 faviconUrl: true,
@@ -110,6 +107,8 @@ export async function POST(req, { params }) {
         if (customUrl) {
             const validateExistanceCustomUrl = await validateCustomUrlExistance(customUrl);
 
+            console.log(validateExistanceCustomUrl);
+
             if (!validateExistanceCustomUrl.isValid) {
                 return NextResponse.json({
                     error: validateExistanceCustomUrl.error
@@ -122,7 +121,7 @@ export async function POST(req, { params }) {
         }
 
         if (!customUrl) {
-            const randomUrl = generateRandomCustomUrl();
+            const randomUrl = await generateRandomCustomUrl();
 
             aliasUrl = randomUrl;
         }

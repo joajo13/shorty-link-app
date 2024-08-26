@@ -8,7 +8,7 @@ export const PageContainer = ({
   return (
     <main
       className={twMerge(
-        "flex min-h-app justify-center overflow-y-auto mt-[122px]",
+        "flex min-h-app justify-center overflow-y-auto mt-[122px] z-0",
         mainClassName
       )}
     >

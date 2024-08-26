@@ -1,7 +1,8 @@
 import { validateUserExistance } from "@/utils/user/validateUserExistance";
 import { validateUserSession } from "@/utils/user/validateUserSession";
+import { NextResponse } from "next/server";
 
-export default async function DELETE(req, { params }) {
+export async function DELETE(req, { params }) {
     try {
         const { user: userId, link: linkId } = params;
 
@@ -15,11 +16,11 @@ export default async function DELETE(req, { params }) {
             });
         }
 
-        const validateUserSession = await validateUserSession(userId);
+        const validateSession = await validateUserSession(userId);
 
-        if (!validateUserSession.isValid) {
+        if (!validateSession.isValid) {
             return NextResponse.json({
-                error: validateUserSession.error
+                error: validateSession.error
             }, {
                 status: 401
             });
@@ -34,9 +35,7 @@ export default async function DELETE(req, { params }) {
             }
         });
 
-        console.log('link', link);
-
-        return NextResponse.json(link.id);
+        return NextResponse.json(userId);
     } catch (error) {
         console.error(error);
         if (error instanceof Error) {

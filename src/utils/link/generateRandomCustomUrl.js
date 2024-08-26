@@ -1,9 +1,11 @@
+import { validateCustomUrlExistance } from "./validateCustomUrlExistance";
+
 export const generateRandomCustomUrl = async () => {
     const randomCustomURL = Math.random().toString(36).substring(2, 7);
 
-    const validateCustomUrlExistance = await validateCustomUrlExistance(randomCustomURL);
+    const validateExistanceCustomUrl = await validateCustomUrlExistance(randomCustomURL);
 
-    if (!validateCustomUrlExistance.isValid) {
+    if (!validateExistanceCustomUrl.isValid) {
         return generateRandomCustomUrl();
     }
 

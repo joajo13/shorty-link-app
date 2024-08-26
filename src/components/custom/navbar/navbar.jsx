@@ -18,7 +18,7 @@ export const Navbar = () => {
   const { data: session } = useSession();
 
   return (
-    <nav className="fixed top-0 w-full backdrop-blur-lg">
+    <nav className="fixed top-0 w-full backdrop-blur-lg z-50">
       {/* Navbar */}
       <div className="flex items-center justify-between flex-wrap px-4 py-4 w-full">
         <Sheet>

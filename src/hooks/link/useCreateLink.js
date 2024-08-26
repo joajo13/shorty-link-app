@@ -5,11 +5,12 @@ import { toast } from "sonner";
 export const useCreateLink = () => {
   const queryClient = useQueryClient();
 
-  const { mutateAsync: callCreateLinkMutation, isPending } = useMutation({
+  const { mutateAsync: callCreateLinkMutation, isPending: createLinkIsPending } = useMutation({
     mutationFn: ({ userId, url, customUrl, customFaviconUrl }) => createLink({ userId, url, customUrl, customFaviconUrl }),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      const userId = data.userId;
       toast.success("Link created successfully");
-      queryClient.invalidateQueries("links");
+      queryClient.invalidateQueries({ queryKey: ["links", userId] });
     },
     onError: (error) => {
       toast.error(error.message);
@@ -18,6 +19,6 @@ export const useCreateLink = () => {
 
   return {
     callCreateLinkMutation,
-    isPending,
+    createLinkIsPending,
   };
 };
