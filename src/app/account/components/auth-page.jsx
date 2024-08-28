@@ -1,4 +1,4 @@
-import { GoogleButton } from "@/components/custom/buttons/google-button";
+import { GoogleButton } from "../../../components/custom/buttons/google-button";
 import { RegisterModal } from "./register-modal";
 import { LoginModal } from "./login-modal";
 

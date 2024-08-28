@@ -7,14 +7,16 @@ import {
 import {
   HiArrowTopRightOnSquare,
 } from "react-icons/hi2";
-import { IconButton } from "../../../components/custom/buttons/icon-button";
 import { LinkActions } from "./link-actions";
 import { LinkInfo } from "./link-info";
 import { IconLinkButton } from "@/components/custom/buttons/icon-link-button";
+import { useSession } from "next-auth/react";
 
 const LinkCard = ({ link }) => {
+  const {data: session} = useSession();
+
   return (
-    <Card>
+    <Card className="shadow-none">
       <CardHeader className="flex flex-row justify-between items-center">
         {/* Component to display link information */}
         <LinkInfo
@@ -33,7 +35,13 @@ const LinkCard = ({ link }) => {
 
       <CardFooter>
         {/* Component to display action buttons */}
-        <LinkActions link={link}/>
+        {
+          session && session.user.id === link.userId && (
+            <LinkActions
+              link={link}
+            />
+          )
+        }
       </CardFooter>
     </Card>
   );

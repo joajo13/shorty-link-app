@@ -8,7 +8,6 @@ import { generateRandomCustomUrl } from "@/utils/link/generateRandomCustomUrl";
 export async function GET(req, { params }) {
     try {
         const userId = params.user;
-        console.log('userId', userId);
 
         const validateSession = await validateUserSession(userId);
         
@@ -40,6 +39,7 @@ export async function GET(req, { params }) {
                 customUrl: true,
                 faviconUrl: true,
                 createdAt: true,
+                userId: true
             }
         })
 
@@ -100,7 +100,7 @@ export async function POST(req, { params }) {
             });
         }
 
-        const faviconUrl = customFaviconUrl || `https://s2.googleusercontent.com/s2/favicons?domain_url=${url}`;
+        const faviconUrl = customFaviconUrl || `https://www.google.com/s2/favicons?sz=32&domain=${url}`;
 
         let aliasUrl = '';
 

@@ -1,3 +1,5 @@
+'use client';
+import { useSession } from "next-auth/react";
 import { twMerge } from "tailwind-merge";
 
 export const PageContainer = ({
@@ -5,10 +7,13 @@ export const PageContainer = ({
   mainClassName,
   sectionClassName,
 }) => {
+  const {data: session} = useSession();
   return (
     <main
       className={twMerge(
-        "flex min-h-app justify-center overflow-y-auto mt-[122px] z-0",
+        `flex justify-center overflow-y-auto z-0
+        ${!session ? "pt-[52px]" : "pt-[102px]"}
+        `,
         mainClassName
       )}
     >

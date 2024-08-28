@@ -5,7 +5,7 @@ import { linkValidationRules } from "@/utils/link/formValidations";
 import { Controller } from "react-hook-form";
 
 export const CustomLinkInput = ({ control, errors }) => (
-  <div className="w-full flex justify-start items-center gap-1 py-2 relative">
+  <div className="w-full flex justify-start items-center gap-1 py-1 relative">
     <span className="text-app-accent font-semibold ml-1">ShortyLink.com/</span>
     <Separator orientation="vertical" className="h-8 mx-3 w-[1px]" />
     <Controller
