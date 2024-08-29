@@ -25,25 +25,25 @@ export const LoggedNavbarAvatar = ({ session }) => {
         </Avatar>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="mr-2">
+      <DropdownMenuContent className="mr-1 w-[10rem]">
         <DropdownMenuItem className="p-0">
           <Button
-            className="w-full justify-start"
+            className="w-full justify-between items-center px-2"
             variant="ghost"
             onClick={handleSignOut}
           >
-            <HiArrowLeftStartOnRectangle className="mr-2" />
-            Sign out
+            Log out
+            <HiArrowLeftStartOnRectangle className="text-destructive"/>
           </Button>
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
 
         <DropdownMenuItem className="p-0">
-          <Button className="w-full justify-start" variant="ghost" asChild>
+          <Button className="w-full justify-between px-2" variant="ghost" asChild>
             <Link href="/account">
-              <HiMiniUser className="mr-2" />
               Account
+              <HiMiniUser />
             </Link>
           </Button>
         </DropdownMenuItem>

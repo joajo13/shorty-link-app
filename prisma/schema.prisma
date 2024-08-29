@@ -93,6 +93,15 @@ model Link {
   faviconUrl String?
   createdAt  DateTime  @default(now())
   updatedAt  DateTime? @updatedAt
+  clicks     Click[]
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Click {
+  id        String   @id @default(cuid())
+  linkId    String
+  clickedAt DateTime @default(now())
+
+  link Link @relation(fields: [linkId], references: [id], onDelete: Cascade)
 }

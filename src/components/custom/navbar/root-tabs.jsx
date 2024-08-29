@@ -27,7 +27,7 @@ export const RootTabs = () => {
   const role = session?.user?.role;
 
   return (
-    <div className="w-full px-4 border-b">
+    <div className="w-full px-4 border-b sticky top-0">
       <ul className="flex justify-start overflow-x-auto gap-5">
         {navigationItems.map(
           (item) =>

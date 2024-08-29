@@ -4,9 +4,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
@@ -23,12 +20,12 @@ export const UnloggedNavbarAvatar = () => {
         </Avatar>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="mr-2">
+      <DropdownMenuContent className="mr-1">
         <DropdownMenuItem className="p-0">
-          <Button className="w-full justify-start" variant="ghost" asChild>
+          <Button className="w-full justify-between px-2" variant="ghost" asChild>
             <Link href="/account">
-              <HiArrowRightEndOnRectangle className="mr-2" />
               Sign in
+              <HiArrowRightEndOnRectangle />
             </Link>
           </Button>
         </DropdownMenuItem>

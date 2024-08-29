@@ -18,10 +18,13 @@ module.exports = {
     },
     extend: {
       height:{
-        app: "calc(100vh - 122px)", // 122px is the height of the navbar
+        app: "calc(100vh - 56px)", // 56px is the height of the navbar
       },
       minHeight: {
-        app: "calc(100vh - 122px)", // 122px is the height of the navbar
+        app: "calc(100vh - 56px)", // 56px is the height of the navbar
+      },
+      maxHeight: {
+        app: "calc(100vh - 56px)", // 56px is the height of the navbar
       },
       colors: {
         border: "hsl(var(--border))",
