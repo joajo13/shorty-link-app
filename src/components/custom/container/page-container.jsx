@@ -17,7 +17,7 @@ export const PageContainer = ({
         mainClassName
       )}
     >
-      <section className={twMerge("py-2 w-full", sectionClassName)}>
+      <section className={twMerge("py-2 w-full px-2", sectionClassName)}>
         {children}
       </section>
     </main>

@@ -6,6 +6,7 @@ import { useCreateLink } from "@/hooks/link/useCreateLink";
 import { useSession } from "next-auth/react";
 import { linkValidationRules } from "@/utils/link/formValidations";
 import { CustomLinkInput } from "./custom-link-input";
+import { toast } from "sonner";
 
 export const NewLinkForm = () => {
   const { data: session } = useSession();
@@ -24,11 +25,13 @@ export const NewLinkForm = () => {
   const onSubmit = async ({ url, customUrl }) => {
     if (!session) return;
 
+    const loadingToast = toast.loading("Creating link...");
     const response = await callCreateLinkMutation({
       userId: session.user.id,
       url,
       customUrl,
     });
+    toast.dismiss(loadingToast);
 
     if (response.error) {
       return;

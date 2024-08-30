@@ -1,12 +1,12 @@
 "use client";
 import { IconButton } from "@/components/custom/buttons/icon-button";
-import { RenameLinkButton } from "./rename-link-button";
 import { DeleteButton } from "@/components/custom/buttons/delete-button";
-import { HiOutlinePencil, HiOutlineShare, HiQrCode } from "react-icons/hi2";
+import { HiOutlineShare } from "react-icons/hi2";
 import { useDeleteLink } from "@/hooks/link/useDeleteLink";
 import { useSession } from "next-auth/react";
-import { Sheet } from "@/components/ui/sheet";
-import { UpdateLinkSheet } from "./update-link-sheet";
+import { UpdateLinkButton } from "./update-link-button";
+import { QrButton } from "./qr-button";
+
 
 export const LinkActions = ({ link }) => {
   const { callDeleteLinkMutation, deleteLinkIsPending } = useDeleteLink();
@@ -31,17 +31,20 @@ export const LinkActions = ({ link }) => {
     <div className="gap-2 justify-between flex items-center w-full">
       <div className="flex justify-start items-center gap-2">
         {/* Button to generate QR code */}
-        <IconButton Icon={HiQrCode} />
+        <QrButton customUrl={link.customUrl}/>
 
         {/* Button to edit the link */}
-        <UpdateLinkSheet/>
+        <UpdateLinkButton
+          linkCustomUrl={link.customUrl}
+          linkUrl={link.url}
+          linkId={link.id}
+        />
 
         {/* Button to share the link */}
         <IconButton
           buttonClassName={
             "text-app-accent border-app-accent hover:bg-app-accent/10 hover:text-app-accent"
           }
-          isLink={true}
           href={`${link.url}`}
           Icon={HiOutlineShare}
         />

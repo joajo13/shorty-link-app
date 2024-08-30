@@ -1,14 +1,16 @@
-export const createLink = async ({
+export const updateLink = async ({
     userId,
+    linkId,
     url,
     customUrl,
 }) => {
     
-    const response = await fetch(`/api/users/${userId}/links`, {
-        method: 'POST',
+    const response = await fetch(`/api/users/${userId}/links/${linkId}`, {
+        method: 'PUT',
         body: JSON.stringify({
             url,
             customUrl,
+            linkId
         }),
         headers: {
             'Content-Type': 'application/json',

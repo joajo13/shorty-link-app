@@ -9,7 +9,7 @@ export default function AccountPage() {
 
   return (
     <PageContainer>
-      <div className="h-full w-full px-3 ">
+      <div className="h-full">
         {session ? <UserPage /> : <AuthPage />}
       </div>
     </PageContainer>

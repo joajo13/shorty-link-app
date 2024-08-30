@@ -16,7 +16,7 @@ export const CustomLinkInput = ({ control, errors }) => (
         <Input
           placeholder="Customize your link"
           {...field}
-          className={`border-none shadow-none pl-1
+          className={`border-none shadow-none pl-1 focus-visible:ring-offset-0 focus-visible:ring-0
               ${errors.customUrl ? "border border-red-500" : ""}`}
         />
       )}

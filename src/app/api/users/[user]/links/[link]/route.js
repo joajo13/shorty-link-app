@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { validateUserExistance } from "@/utils/user/validateUserExistance";
 import { validateUserSession } from "@/utils/user/validateUserSession";
+import { validateLinkExistance } from "@/utils/link/validateLinkExistance";
 import { NextResponse } from "next/server";
 
 export async function DELETE(req, { params }) {
@@ -24,6 +25,16 @@ export async function DELETE(req, { params }) {
                 error: validateSession.error
             }, {
                 status: 401
+            });
+        }
+
+        const validateExistanceLink = await validateLinkExistance(linkId);
+
+        if (!validateExistanceLink.isValid) {
+            return NextResponse.json({
+                error: validateExistanceLink.error
+            }, {
+                status: 404
             });
         }
 
@@ -53,4 +64,66 @@ export async function DELETE(req, { params }) {
         });
     }
 
+}
+
+export async function PUT(req, { params }) {
+    try {
+        const userId = params.user;
+        const body = await req.json()
+
+        const { url, customUrl, linkId } = body
+
+        const validateSession = await validateUserSession(userId);
+
+        if (!validateSession.isValid) {
+            return NextResponse.json({
+                error: validateSession.error
+            }, {
+                status: 401
+            });
+        }
+
+        const validateExistanceUser = await validateUserExistance(userId);
+
+        if (!validateExistanceUser.isValid) {
+            return NextResponse.json({
+                error: validateExistanceUser.error
+            }, {
+                status: 404
+            });
+        }
+
+        const validateExistanceLink = await validateLinkExistance(linkId);
+
+        if (!validateExistanceLink.isValid) {
+            return NextResponse.json({
+                error: validateExistanceLink.error
+            }, {
+                status: 404
+            });
+        }
+
+        const link = await prisma.link.update({
+            where: {
+                id: linkId
+            },
+            data: {
+                url,
+                customUrl
+            },
+            select: {
+                id: true
+            }
+        });
+
+        return NextResponse.json(link);
+    }
+    catch (error) {
+        console.log(error);
+        return NextResponse.json({
+            error: "An error occurred"
+        }, {
+            status: 500
+        });
+    }
 }

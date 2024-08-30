@@ -68,19 +68,9 @@ export async function POST(req, { params }) {
         const userId = params.user;
         const body = await req.json()
 
-        const { url, customUrl, customFaviconUrl } = body
-
-        console.log({
-            userId,
-            url,
-            customUrl,
-            customFaviconUrl
-        });
-        
+        const { url, customUrl } = body
 
         const validateSession = await validateUserSession(userId);
-
-        console.log(validateSession);
 
         if (!validateSession.isValid) {
             return NextResponse.json({
@@ -100,7 +90,7 @@ export async function POST(req, { params }) {
             });
         }
 
-        const faviconUrl = customFaviconUrl || `https://www.google.com/s2/favicons?sz=32&domain=${url}`;
+        const faviconUrl = `https://www.google.com/s2/favicons?sz=32&domain=${url}`;
 
         let aliasUrl = '';
 
