@@ -10,7 +10,11 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { HiArrowDownTray, HiOutlineClipboardDocument, HiQrCode } from "react-icons/hi2";
+import {
+  HiArrowDownTray,
+  HiOutlineClipboardDocument,
+  HiQrCode,
+} from "react-icons/hi2";
 import { useGetQrCode } from "@/hooks/useGetQrCode";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Image from "next/image";
@@ -45,9 +49,12 @@ export const QrButton = ({ customUrl }) => {
   return (
     <Drawer>
       <DrawerTrigger>
-        <div className="border rounded-md p-2 hover:bg-slate-100 transition-colors duration-150">
+        <Button
+          variant="outline"
+          size="icon"
+        >
           <HiQrCode size={20} />
-        </div>
+        </Button>
       </DrawerTrigger>
       <DrawerContent
         side="bottom"

@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { validateUserExistance } from "@/utils/user/validateUserExistance";
 import { validateUserSession } from "@/utils/user/validateUserSession";
-import { validateLinkExistance } from "@/utils/link/validateLinkExistance";
+import { validateLinkExistanceByLinkId } from "@/utils/link/validateLinkExistanceByLinkId";
 import { NextResponse } from "next/server";
 
 export async function DELETE(req, { params }) {
@@ -28,7 +28,7 @@ export async function DELETE(req, { params }) {
             });
         }
 
-        const validateExistanceLink = await validateLinkExistance(linkId);
+        const validateExistanceLink = await validateLinkExistanceByLinkId(linkId);
 
         if (!validateExistanceLink.isValid) {
             return NextResponse.json({
@@ -93,7 +93,7 @@ export async function PUT(req, { params }) {
             });
         }
 
-        const validateExistanceLink = await validateLinkExistance(linkId);
+        const validateExistanceLink = await validateLinkExistanceByLinkId(linkId);
 
         if (!validateExistanceLink.isValid) {
             return NextResponse.json({
@@ -112,7 +112,8 @@ export async function PUT(req, { params }) {
                 customUrl
             },
             select: {
-                id: true
+                id: true,
+                userId: true
             }
         });
 

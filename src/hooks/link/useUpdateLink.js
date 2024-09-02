@@ -9,6 +9,7 @@ export const useUpdateLink = () => {
     mutationFn: ({ userId, url, customUrl, linkId }) => updateLink({ userId, url, customUrl, linkId }),
     onSuccess: (data) => {
       const userId = data.userId;
+      console.log("data", data);
       toast.success("Link updated successfully");
       queryClient.invalidateQueries({ queryKey: ["links", userId] });
     },

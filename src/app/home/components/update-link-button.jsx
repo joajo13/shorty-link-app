@@ -11,14 +11,18 @@ import {
 import { HiOutlinePencil } from "react-icons/hi2";
 import { UpdateLinkForm } from "./update-link-form";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { Button } from "@/components/ui/button";
 
-export const UpdateLinkButton = ({linkUrl, linkCustomUrl, linkId}) => {
+export const UpdateLinkButton = ({ linkUrl, linkCustomUrl, linkId }) => {
   return (
     <Drawer>
       <DrawerTrigger>
-        <div className="border rounded-md p-2 hover:bg-slate-100 transition-colors duration-150">
+        <Button
+          variant="outline"
+          size="icon"
+        >
           <HiOutlinePencil size={20} />
-        </div>
+        </Button>
       </DrawerTrigger>
       <DrawerContent
         side="bottom"
@@ -32,14 +36,12 @@ export const UpdateLinkButton = ({linkUrl, linkCustomUrl, linkId}) => {
           </VisuallyHidden>
           <DrawerClose />
         </DrawerHeader>
-        <UpdateLinkForm 
+        <UpdateLinkForm
           customUrl={linkCustomUrl}
           url={linkUrl}
           linkId={linkId}
         />
-        <DrawerFooter
-        >
-        </DrawerFooter>
+        <DrawerFooter></DrawerFooter>
       </DrawerContent>
     </Drawer>
   );

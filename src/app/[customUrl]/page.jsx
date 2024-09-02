@@ -18,11 +18,13 @@ export default async function CustomUrlPage(props) {
     
     if (!link) return redirect(301, routes.home);
 
-    await prisma.click.create({
+    const click = await prisma.click.create({
       data: {
         linkId: link.id,
       },
     });
+
+    console.log("click", click);
 
     return redirect(link.url)
   }

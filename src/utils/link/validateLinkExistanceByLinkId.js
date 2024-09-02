@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
-export const validateLinkExistance = async (linkId) => {
+export const validateLinkExistanceByLinkId = async (linkId) => {
     if (!linkId) {
         return {
             isValid: false,
