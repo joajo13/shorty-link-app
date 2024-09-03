@@ -7,12 +7,10 @@ import { NextResponse } from "next/server";
 export async function GET(req, params) {
     try {
         const { user: userId, link: customUrl } = params.params;
-
         const { searchParams } = new URL(req.url);
         const range = searchParams.get('range');
 
         const validateSession = await validateUserSession(userId);
-
         if (!validateSession.isValid) {
             return NextResponse.json({
                 error: validateSession.error
@@ -22,7 +20,6 @@ export async function GET(req, params) {
         }
 
         const validateExistance = await validateUserExistance(userId);
-
         if (!validateExistance.isValid) {
             return NextResponse.json({
                 error: validateExistance.error
@@ -32,7 +29,6 @@ export async function GET(req, params) {
         }
 
         const validateExistanceLink = await validateLinkExistanceByCustomUrl(customUrl);
-
         if (!validateExistanceLink.isValid) {
             return NextResponse.json({
                 error: validateExistanceLink.error
@@ -41,29 +37,9 @@ export async function GET(req, params) {
             });
         }
 
-        // Parse the range parameter
-        const rangeValue = parseInt(range.slice(0, -1), 10);
-        const rangeUnit = range.slice(-1).toUpperCase();
-
-        let dateRange;
-        switch (rangeUnit) {
-            case 'D':
-                dateRange = new Date(new Date() - rangeValue * 24 * 60 * 60 * 1000);
-                break;
-            case 'W':
-                dateRange = new Date(new Date() - rangeValue * 7 * 24 * 60 * 60 * 1000);
-                break;
-            case 'M':
-                dateRange = new Date();
-                dateRange.setMonth(dateRange.getMonth() - rangeValue);
-                break;
-            case 'Y':
-                dateRange = new Date();
-                dateRange.setFullYear(dateRange.getFullYear() - rangeValue);
-                break;
-            default:
-                dateRange = new Date(new Date() - 30 * 24 * 60 * 60 * 1000); // Default to 30 days
-        }
+        const rangeValue = parseInt(range); //Days to substract
+        const dateRange = new Date();
+        dateRange.setDate(dateRange.getDate() - rangeValue);
 
         const clicksGrouped = await prisma.click.groupBy({
             by: ['clickedAt'],
@@ -87,7 +63,6 @@ export async function GET(req, params) {
             count: click._count.id
         }));
 
-
         const clicksGroupedFormatted = formattedClicksByDay.reduce((acc, click) => {
             if (!acc[click.date]) {
                 acc[click.date] = 0;
@@ -110,8 +85,12 @@ export async function GET(req, params) {
             count: clicksGroupedFormatted[date] || 0
         }));
 
-        return NextResponse.json(clicksByDay);
+        const totalClicks = clicksByDay.reduce((acc, click) => acc + click.count, 0);
 
+        return NextResponse.json({
+            totalClicks,
+            clicks: clicksByDay
+        });
     } catch (error) {
         console.error(error);
 

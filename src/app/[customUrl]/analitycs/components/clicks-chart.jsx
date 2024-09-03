@@ -7,7 +7,7 @@ import {
 
 export const ClicksChart = ({clicks, chartConfig}) => {
   return (
-    <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+    <ChartContainer config={chartConfig} className="w-full h-[200px] md:h-[350px] lg:h-[500px]">
       <AreaChart accessibilityLayer data={clicks || []}>
         <XAxis dataKey="date" tickLine={false} axisLine={false} />
         <ChartTooltip

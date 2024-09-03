@@ -1,18 +1,18 @@
 export const ranges = [
     {
-      value: "7D",
+      value: "7",
       label: "Last 7 days",
     },
     {
-      value: "30D",
+      value: "30",
       label: "Last 30 days",
     },
     {
-      value: "3M",
+      value: "90",
       label: "Last 3 months",
     },
     {
-      value: "6M",
+      value: "180",
       label: "Last 6 months",
     },
   ];

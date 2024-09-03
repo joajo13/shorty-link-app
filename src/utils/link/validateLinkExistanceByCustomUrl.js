@@ -8,9 +8,12 @@ export const validateLinkExistanceByCustomUrl = async (customUrl) => {
         }
     }
 
-    const link = prisma.link.findUnique({
+    const link = await prisma.link.findUnique({
         where: {
-            customUrl
+            customUrl: customUrl
+        },
+        select: {
+            id: true,
         }
     });
 
