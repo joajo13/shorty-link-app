@@ -10,11 +10,13 @@ export const useGetClicks = (userId, customUrl, range) => {
 
     const clicks = data?.clicks || [];
     const totalClicks = data?.totalClicks || 0;
+    const trend = data?.trend || null;
 
     return {
         isLoading,
         isError,
         clicks,
+        trend,
         totalClicks
     }
 }

@@ -16,7 +16,9 @@ import { Button } from "@/components/ui/button";
 export const UpdateLinkButton = ({ linkUrl, linkCustomUrl, linkId }) => {
   return (
     <Drawer>
-      <DrawerTrigger>
+      <DrawerTrigger
+        asChild
+      >
         <Button
           variant="outline"
           size="icon"

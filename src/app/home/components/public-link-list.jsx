@@ -29,16 +29,18 @@ export const PublicLinkList = () => {
   return (
     <div className="w-full">
       <div className="flex justify-between items-center py-2">
-        <h2 className="text-xl text-app-accent font-semibold">Public links</h2>
+        <h2 className="text-xl text-app-accent font-semibold">
+          Most famous links
+        </h2>
         <Button variant="ghost" onClick={() => setLinksVisible(!linksVisible)}>
           {linksVisible ? <HiEyeSlash /> : <HiEye />}
         </Button>
       </div>
 
       <div
-        className={`flex-col gap-4 mt-2
-        ${!linksVisible ? "hidden" : "flex"}
-        `}
+        className={`flex-col gap-4 mt-2 flex ${
+          !linksVisible ? "h-[0px] overflow-hidden" : "h-full"
+        }`}
         ref={parent}
       >
         {isLoading ? (

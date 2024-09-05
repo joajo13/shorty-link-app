@@ -1,8 +1,10 @@
-import { prisma } from "@/lib/prisma";
 import { validateUserExistance } from "@/utils/user/validateUserExistance";
 import { validateUserSession } from "@/utils/user/validateUserSession";
 import { validateLinkExistanceByCustomUrl } from "@/utils/link/validateLinkExistanceByCustomUrl";
+import { getDateRange } from "@/utils/clicks/getDateRange";
+import { getClicksGroupedByDay } from "@/utils/clicks/getClicksGroupedByDay";
 import { NextResponse } from "next/server";
+import { calculateTrend } from "@/utils/clicks/calculateTrend";
 
 export async function GET(req, params) {
     try {
@@ -37,59 +39,20 @@ export async function GET(req, params) {
             });
         }
 
-        const rangeValue = parseInt(range); //Days to substract
-        const dateRange = new Date();
-        dateRange.setDate(dateRange.getDate() - rangeValue);
+        const { dateRange, rangeValue } = getDateRange(range);
 
-        const clicksGrouped = await prisma.click.groupBy({
-            by: ['clickedAt'],
-            where: {
-                linkId: validateExistanceLink.link.id,
-                clickedAt: {
-                    gte: dateRange
-                }
-            },
-            _count: {
-                id: true
-            },
-            orderBy: {
-                clickedAt: 'asc'
-            }
+        const { totalClicks, clicks } = await getClicksGroupedByDay({
+            dateRange,
+            rangeValue,
+            linkId: validateExistanceLink.link.id
         });
 
-        // Format date as YYYY-MM-DD
-        const formattedClicksByDay = clicksGrouped.map(click => ({
-            date: click.clickedAt.toISOString().split('T')[0],
-            count: click._count.id
-        }));
-
-        const clicksGroupedFormatted = formattedClicksByDay.reduce((acc, click) => {
-            if (!acc[click.date]) {
-                acc[click.date] = 0;
-            }
-            acc[click.date] += click.count;
-            return acc;
-        }, {});
-
-        // Generate a list of dates in based on the range
-        const dates = [];
-        for (let i = 0; i < rangeValue; i++) {
-            const date = new Date(dateRange);
-            date.setDate(date.getDate() + i);
-            dates.push(date.toISOString().split('T')[0]);
-        }
-
-        // Fill in the missing dates with 0 clicks
-        const clicksByDay = dates.map(date => ({
-            date,
-            count: clicksGroupedFormatted[date] || 0
-        }));
-
-        const totalClicks = clicksByDay.reduce((acc, click) => acc + click.count, 0);
+        const trend = calculateTrend(clicks);
 
         return NextResponse.json({
             totalClicks,
-            clicks: clicksByDay
+            clicks,
+            trend
         });
     } catch (error) {
         console.error(error);

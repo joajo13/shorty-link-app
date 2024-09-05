@@ -48,7 +48,9 @@ export const QrButton = ({ customUrl }) => {
 
   return (
     <Drawer>
-      <DrawerTrigger>
+      <DrawerTrigger
+        asChild
+      >
         <Button
           variant="outline"
           size="icon"

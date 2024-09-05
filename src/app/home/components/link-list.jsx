@@ -1,18 +1,14 @@
 "use client";
 import { useGetLinksByUserId } from "@//hooks/link/useGetLinksByUserId";
 import { useSession } from "next-auth/react";
-import { Suspense, useEffect, useRef, lazy } from "react";
+import { useEffect, useRef, lazy } from "react";
 import { LinksEmptyCard } from "./links-empty-card";
 import autoAnimate from "@formkit/auto-animate";
 import { LinkCardSkeleton } from "./link-card-skeleton";
 const LinkCard = lazy(() => import("./link-card"));
 
 const renderLink = (link) => {
-  return (
-    <Suspense fallback={<LinkCardSkeleton />} key={link.customUrl}>
-      <LinkCard link={link} />
-    </Suspense>
-  );
+  return <LinkCard link={link} key={link.id}/>;
 };
 
 export const LinkList = () => {
