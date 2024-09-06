@@ -6,6 +6,7 @@ const cardData = [
     title: "Total de usuarios",
     value: "1242",
     description: "+10% desde el último mes",
+    href: "/dashboard/users",
   },
   {
     Icon: <ActivityIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />,
@@ -37,6 +38,7 @@ export const DashboardCardsList = () => {
           title={card.title}
           value={card.value}
           description={card.description}
+          href={card.href || ""}
         />
       ))}
     </div>

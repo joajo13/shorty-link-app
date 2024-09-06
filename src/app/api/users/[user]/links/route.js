@@ -4,6 +4,7 @@ import { validateUserExistance } from "@/utils/user/validateUserExistance";
 import { prisma } from "@/lib/prisma";
 import { validateCustomUrlExistance } from "@/utils/link/validateCustomUrlExistance";
 import { generateRandomCustomUrl } from "@/utils/link/generateRandomCustomUrl";
+import { handleError } from "@/utils/handleError";
 
 export async function GET(req, { params }) {
     try {
@@ -45,21 +46,7 @@ export async function GET(req, { params }) {
 
         return NextResponse.json(links);
     } catch (error) {
-        console.error(error);
-
-        if (error instanceof Error) {
-            return NextResponse.json({
-                error: error.message
-            }, {
-                status: 500
-            })
-        }
-
-        return NextResponse.json({
-            error: "An error occurred"
-        }, {
-            status: 500
-        });
+        return handleError(error);
     }
 }
 
@@ -127,20 +114,6 @@ export async function POST(req, { params }) {
 
         return NextResponse.json(link);
     } catch (error) {
-        console.error(error);
-
-        if (error instanceof Error) {
-            return NextResponse.json({
-                error: error.message
-            }, {
-                status: 500
-            })
-        }
-
-        return NextResponse.json({
-            error: "An error occurred"
-        }, {
-            status: 500
-        });
+        return handleError(error);
     }
 }
