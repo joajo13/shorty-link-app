@@ -10,7 +10,7 @@ export default function UserDashboard() {
 
       <DashboardCardsList />
 
-      <div className="flex justify-between items-center w-full flex-col gap-2">
+      <div className="flex justify-between items-center w-full flex-col gap-2 lg:flex-row">
         <ActivityChartCard />
 
         <NewUsersCard />

@@ -1,20 +1,20 @@
 import { ROLES } from "./roles";
-import { routes } from "./routes";
+import { baseRoutes } from "./routes";
 
 export const navigationItems = [
   {
     label: "Dashboard",
-    href: routes.dashboard,
+    href: baseRoutes.dashboard,
     auth: ROLES.ADMIN,
   },
   {
     label: "Overview",
-    href: routes.home,
+    href: baseRoutes.home,
     auth: ROLES.USER,
   },
   {
     label: "Account",
-    href: routes.account,
+    href: baseRoutes.account,
     auth: ROLES.USER,
   },
 ];

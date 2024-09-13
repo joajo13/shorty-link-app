@@ -42,7 +42,7 @@ const chartConfig = {
 
 export const ActivityChartCard = () => {
   return (
-    <Card className="w-full md:w-1/2">
+    <Card className="w-full md:w-1/2 h-full">
       <CardHeader>
         <CardTitle>Actividad de Usuarios</CardTitle>
       </CardHeader>

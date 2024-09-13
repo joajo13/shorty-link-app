@@ -1,14 +1,14 @@
 import { validateUserExistance } from "@/utils/user/validateUserExistance";
 import { validateUserSession } from "@/utils/user/validateUserSession";
 import { validateLinkExistanceByCustomUrl } from "@/utils/link/validateLinkExistanceByCustomUrl";
-import { getDateRange } from "@/utils/clicks/getDateRange";
+import { getDateRange } from "@/utils/getDateRange";
 import { getClicksGroupedByDay } from "@/utils/clicks/getClicksGroupedByDay";
 import { NextResponse } from "next/server";
 import { calculateTrend } from "@/utils/clicks/calculateTrend";
 
-export async function GET(req, params) {
+export async function GET(req, { params }) {
     try {
-        const { user: userId, link: customUrl } = params.params;
+        const { user: userId, link: customUrl } = params;
         const { searchParams } = new URL(req.url);
         const range = searchParams.get('range');
 

@@ -6,7 +6,7 @@ import { useDeleteLink } from "@/hooks/link/useDeleteLink";
 import { useSession } from "next-auth/react";
 import { UpdateLinkButton } from "./update-link-button";
 import { QrButton } from "./qr-button";
-import { routes } from "@/constants/routes";
+import { baseRoutes } from "@/constants/routes";
 
 export const LinkActions = ({ link }) => {
   const { callDeleteLinkMutation, deleteLinkIsPending } = useDeleteLink();
@@ -44,7 +44,7 @@ export const LinkActions = ({ link }) => {
           buttonClassName={
             "border p-2 rounded-md"
           }
-          href={`${link.customUrl}/${routes.analitycs}`}
+          href={`${link.customUrl}/${baseRoutes.analitycs}`}
           Icon={HiChartBar}
         />
 

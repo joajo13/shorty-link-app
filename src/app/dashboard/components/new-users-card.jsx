@@ -16,7 +16,7 @@ import {
 
 export const NewUsersCard = () => {
   return (
-    <Card className="w-full md:w-1/2 py-2">
+    <Card className="w-full h-full md:w-1/2 py-2">
       <CardHeader>
         <CardTitle>Usuarios Recientes</CardTitle>
         <CardDescription>

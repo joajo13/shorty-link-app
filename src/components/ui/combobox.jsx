@@ -1,11 +1,13 @@
 "use client";
-import { useState } from "react";
+import * as React from "react";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
+  CommandEmpty,
   CommandGroup,
+  CommandInput,
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
@@ -14,10 +16,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ranges } from "@/constants/rangeDates";
 
-export function DateRangeSelect({ value, onChange }) {
-  const [open, setOpen] = useState(false);
+export function Combobox({
+  options,
+  value,
+  onChange,
+  placeholder = "Select an option...",
+  commandEmptyLabel: emptyLabel = "Nothing found.",
+  liveSearch = false,
+  ...props
+}) {
+  const [open, setOpen] = React.useState(false);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -26,32 +35,36 @@ export function DateRangeSelect({ value, onChange }) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[150px] justify-between"
+          className="min-w-[150px] justify-between"
         >
           {value
-            ? ranges.find((range) => range.value === value)?.label
-            : "Select framework..."}
+            ? options.find((option) => option.value === value)?.label
+            : placeholder}
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
+
       <PopoverContent className="w-[150px] p-0">
         <Command>
+          {liveSearch && (
+            <CommandInput placeholder={placeholder} className="h-9" />
+          )}
+
           <CommandList>
+            <CommandEmpty>{emptyLabel}</CommandEmpty>
             <CommandGroup>
-              {ranges.map((range) => (
+              {options.map((option) => (
                 <CommandItem
-                  key={range.value}
-                  value={range.value}
-                  onSelect={() => {
-                    onChange(range.value);
-                    setOpen(false);
-                  }}
+                  key={option.value}
+                  value={option.value}
+                  onSelect={(currentValue) => onChange(currentValue)}
+                  className="cursor-pointer"
                 >
-                  {range.label}
+                  {option.label}
                   <CheckIcon
                     className={cn(
                       "ml-auto h-4 w-4",
-                      value === range.value ? "opacity-100" : "opacity-0"
+                      value === option.value ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>

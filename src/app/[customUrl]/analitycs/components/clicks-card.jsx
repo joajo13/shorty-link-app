@@ -11,13 +11,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useGetClicks } from "@/hooks/clicks/useGetClicks";
 import { useSession } from "next-auth/react";
 import { ClicksChart } from "./clicks-chart";
-import { DateRangeSelect } from "./date-range-select";
+import { DateRangeSelect } from "@/components/custom/date-range-select";
 import { useState } from "react";
 import { ClicksAmountCard } from "./clicks-amount-card";
+import { ranges } from "@/constants/rangeDates";
 
 export const ClicksCard = ({ customUrl }) => {
   const { data: session } = useSession();
-  const [range, setRange] = useState("7");
+  const [range, setRange] = useState(ranges[0].value);
   const { isLoading, clicks, totalClicks, trend } = useGetClicks(
     session?.user.id,
     customUrl,
