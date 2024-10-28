@@ -40,7 +40,7 @@ export async function GET(req, { params }) {
                 customUrl: true,
                 faviconUrl: true,
                 createdAt: true,
-                userId: true
+                userId: true,
             }
         })
 

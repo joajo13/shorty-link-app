@@ -16,6 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { twMerge } from "tailwind-merge";
 
 export function Combobox({
   options,
@@ -35,16 +36,16 @@ export function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="min-w-[150px] justify-between"
+          className={twMerge("min-w-[150px] justify-between shadow-none", props.buttonClassName)}
         >
           {value
-            ? options.find((option) => option.value === value)?.label
+            ? options.find((option) => String(option.value) === String(value))?.label
             : placeholder}
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-[150px] p-0">
+      <PopoverContent className={twMerge("w-[150px] p-0", props.popoverClassName)}>
         <Command>
           {liveSearch && (
             <CommandInput placeholder={placeholder} className="h-9" />
@@ -57,14 +58,15 @@ export function Combobox({
                 <CommandItem
                   key={option.value}
                   value={option.value}
-                  onSelect={(currentValue) => onChange(currentValue)}
+                  onSelect={(currentValue) => {
+                    onChange(currentValue)}}
                   className="cursor-pointer"
                 >
                   {option.label}
                   <CheckIcon
                     className={cn(
                       "ml-auto h-4 w-4",
-                      value === option.value ? "opacity-100" : "opacity-0"
+                      String(value) === String(option.value) ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>

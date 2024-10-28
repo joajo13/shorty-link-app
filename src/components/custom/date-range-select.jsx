@@ -1,74 +1,26 @@
 "use client";
-import { useState } from "react";
-import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import {
-  Command,
-  CommandGroup,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { RANGES } from "@/constants/rangeDates";
+import { Combobox } from "../ui/combobox";
 
 const ranges = [
-  { label: "Today", value: RANGES.TODAY },
-  { label: "Yesterday", value: RANGES.YESTERDAY },
-  { label: "Last 7 days", value: RANGES.LAST_7_DAYS },
-  { label: "Last 30 days", value: RANGES.LAST_30_DAYS },
-  { label: "Last month", value: RANGES.LAST_MONTH },
+  { label: "Today", value: '1' },
+  { label: "Yesterday", value: '2' },
+  { label: "Last 7 days", value: '7' },
+  { label: "Last month", value: '30' },
+  { label: "Last 3 months", value: '90' },
 ];
 
-export function DateRangeSelect({ value, onChange }) {
-  const [open, setOpen] = useState(false);
-
+export function DateRangeSelect({ range, onChange, setRange, placeholder, buttonClassName = '', popoverClassName = '' }) {
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-[200px] md:min-w-[200px] justify-between"
-        >
-          {value
-            ? ranges.find((range) => range.value === value)?.label
-            : "Select range..."}
-          <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
-        <Command>
-          <CommandList>
-            <CommandGroup>
-              {ranges.map((range) => (
-                <CommandItem
-                  key={range.value}
-                  value={range.value}
-                  onSelect={() => {
-                    onChange(range.value);
-                    setOpen(false);
-                  }}
-                  className="cursor-pointer"
-                >
-                  {range.label}
-                  <CheckIcon
-                    className={cn(
-                      "ml-auto h-4 w-4",
-                      value === range.value ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+    <Combobox
+      options={ranges}
+      onChange={onChange}
+      value={range}
+      commandEmptyLabel="No ranges found."
+      placeholder={placeholder ?? "Select a range..."}
+      className="shadow-none"
+      setValue={setRange}
+      buttonClassName={buttonClassName}
+      popoverClassName={popoverClassName}
+    />
   );
 }

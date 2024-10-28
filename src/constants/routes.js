@@ -6,7 +6,7 @@ export const baseRoutes = {
 };
 
 export const dashboardRoutes = {
-    allUsers: baseRoutes.dashboard + "/users/all",
-    activeUsers: baseRoutes.dashboard + "/users/active",
-    newUsers: baseRoutes.dashboard + "/users/new",
+    allUsers: baseRoutes.dashboard + "/users",
+    activeUsers: baseRoutes.dashboard + "/users",
+    newUsers: baseRoutes.dashboard + "/users?range=7",
 }

@@ -14,11 +14,11 @@ import { ClicksChart } from "./clicks-chart";
 import { DateRangeSelect } from "@/components/custom/date-range-select";
 import { useState } from "react";
 import { ClicksAmountCard } from "./clicks-amount-card";
-import { ranges } from "@/constants/rangeDates";
+import { RANGES } from "@/constants/rangeDates";
 
 export const ClicksCard = ({ customUrl }) => {
   const { data: session } = useSession();
-  const [range, setRange] = useState(ranges[0].value);
+  const [range, setRange] = useState(RANGES.LAST_7_DAYS);
   const { isLoading, clicks, totalClicks, trend } = useGetClicks(
     session?.user.id,
     customUrl,

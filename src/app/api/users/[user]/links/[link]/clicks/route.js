@@ -41,6 +41,12 @@ export async function GET(req, { params }) {
 
         const { dateRange, rangeValue } = getDateRange(range);
 
+        console.log({
+            dateRange,
+            rangeValue,
+            range
+        })
+
         const { totalClicks, clicks } = await getClicksGroupedByDay({
             dateRange,
             rangeValue,

@@ -1,4 +1,4 @@
-import { routes } from "@/constants/routes";
+import { baseRoutes } from "@/constants/routes";
 import { PrismaClient } from "@prisma/client";
 import { redirect } from "next/navigation";
 
@@ -16,9 +16,8 @@ export default async function CustomUrlPage(props) {
       },
     });
     
-    if (!link) return redirect(routes.home);
+    if (!link) return redirect(baseRoutes.home);
 
-    
 
     const click = await prisma.click.create({
       data: {

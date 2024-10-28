@@ -11,9 +11,9 @@ import {
 import {
   HiArrowsUpDown,
   HiEllipsisHorizontal,
-  HiOutlinePencilSquare,
   HiOutlineTrash,
 } from "react-icons/hi2";
+import EditUserDrawer from "./edit-user-drawer";
 
 const ActionCell = ({ row }) => {
   const user = row.original;
@@ -29,16 +29,18 @@ const ActionCell = ({ row }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
+
           <DropdownMenuItem
             onClick={() => navigator.clipboard.writeText(user.id)}
           >
             Copy user ID
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="flex items-center justify-between">
-            Edit
-            <HiOutlinePencilSquare />
+
+          <DropdownMenuItem asChild>
+            <EditUserDrawer user={user} />
           </DropdownMenuItem>
+
           <DropdownMenuItem asChild>
             <Button
               variant="ghost"
@@ -58,13 +60,11 @@ const ActionHeader = () => {
   return <div className="px-4 text-center">Actions</div>;
 };
 
-const DateCell = ({ row }) => {
-  const date = new Date(row.original.createdAt);
-  return <div className="px-4 text-center">{date.toLocaleDateString()}</div>;
-};
-
-const DateHeader = (header) => {
-  return <div className="px-4 text-center">{header}</div>;
+const DateCell = ({ row, field }) => {
+  const date = new Date(row.original[field]);
+  return (
+    <div className="px-4 whitespace-nowrap">{date.toLocaleDateString()}</div>
+  );
 };
 
 const NoWrapCell = ({ row, field }) => {
@@ -105,12 +105,17 @@ export const columns = [
   {
     accessorKey: "createdAt",
     header: ({ column }) => NoWrapHeader("Created at", column),
-    cell: DateCell,
+    cell: ({ row }) => <DateCell row={row} field="createdAt" />,
   },
   {
     accessorKey: "updatedAt",
     header: ({ column }) => NoWrapHeader("Updated at", column),
-    cell: DateCell,
+    cell: ({ row }) => <DateCell row={row} field="updatedAt" />,
+  },
+  {
+    accessorKey: "lastLogin",
+    header: ({ column }) => NoWrapHeader("Last login", column),
+    cell: ({ row }) => <DateCell row={row} field="lastLogin" />,
   },
   {
     accessorKey: "actions",

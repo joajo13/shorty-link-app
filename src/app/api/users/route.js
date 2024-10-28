@@ -1,17 +1,36 @@
 import { ROLES } from '@/constants/roles';
 import { handleError } from '@/utils/handleError';
 import { NextResponse } from 'next/server';
-import { validateUserRol } from '@/utils/user/validateUserRol';
+import { validateUserRole } from '@/utils/user/validateUserRole';
 import { prisma } from '@/lib/prisma';
+import { getDateRange } from '@/utils/getDateRange';
 
 export async function GET(req, { params }) {
     try {
-        const rolValidation = await validateUserRol(ROLES.ADMIN);
+        const { searchParams } = new URL(req.url);
+        var range = searchParams.get('range');
+        var role = searchParams.get('role');
+        const filters = {}
+
+        const rolValidation = await validateUserRole(ROLES.ADMIN);
         if (!rolValidation.isValid) {
             return NextResponse.json({ error: rolValidation.error }, { status: 401 });
         }
 
+        const { dateRange } = getDateRange(range);
+
+        if (dateRange) {
+            filters.createdAt = {
+                gte: dateRange
+            }
+        }
+
+        if (role) {
+            filters.role = role;
+        }
+
         const users = await prisma.user.findMany({
+            where: filters,
             select: {
                 id: true,
                 name: true,
@@ -19,6 +38,7 @@ export async function GET(req, { params }) {
                 role: true,
                 createdAt: true,
                 updatedAt: true,
+                lastLogin: true
             }
         })
 

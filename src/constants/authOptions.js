@@ -33,6 +33,13 @@ export const authOptions = {
         async jwt({ token, user, trigger, session }) {
             if (trigger === "update") return { ...token, ...session.user };
 
+            if (user) {
+                await prisma.user.update({
+                    where: { id: user.id },
+                    data: { lastLogin: new Date() }
+                })
+            }
+
             return { ...token, ...user };
         },
         async session({ session, token }) {

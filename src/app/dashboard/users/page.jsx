@@ -1,11 +1,12 @@
 import { PageContainer } from "@/components/custom/container/page-container";
+import { UsersTableCard } from "./components/users-table-card";
 import { PageTitle } from "@/components/custom/page-title";
-import { UsersTableCard } from "./new/components/new-users-table-card";
 
-export default function UsersPage() {
+export default function NewUsersPage() {
+  
   return (
     <PageContainer>
-      <PageTitle title="New Users" />
+      <PageTitle title='Users' />
 
       <UsersTableCard />
     </PageContainer>
