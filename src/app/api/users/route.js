@@ -7,9 +7,8 @@ import { getDateRange } from '@/utils/getDateRange';
 
 export async function GET(req, { params }) {
     try {
-        const { searchParams } = new URL(req.url);
-        var range = searchParams.get('range');
-        var role = searchParams.get('role');
+        const range = req.nextUrl.searchParams.get('range');
+        const role = req.nextUrl.searchParams.get('role');
         const filters = {}
 
         const rolValidation = await validateUserRole(ROLES.ADMIN);

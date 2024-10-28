@@ -26,8 +26,8 @@ model User {
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   lastLogin DateTime?
 }
 
@@ -100,9 +100,17 @@ model Link {
 }
 
 model Click {
-  id        String   @id @default(cuid())
-  linkId    String
-  clickedAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  linkId      String
+  country     String   @default("Unknown")
+  region      String   @default("Unknown")
+  city        String   @default("Unknown")
+  latitude    Float    @default(0)
+  longitude   Float    @default(0)
+  countryCode String   @default("Unknown")
+  regionCode  String   @default("Unknown")
+  clickedAt   DateTime @default(now())
+  ip          String   @default("Unknown")
 
   link Link @relation(fields: [linkId], references: [id], onDelete: Cascade)
 }

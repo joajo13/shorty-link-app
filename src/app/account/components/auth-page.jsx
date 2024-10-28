@@ -1,6 +1,4 @@
-import { GoogleButton } from "../../../components/custom/buttons/google-button";
-import { RegisterModal } from "./register-modal";
-import { LoginModal } from "./login-modal";
+import { GoogleButton } from "@/components/custom/buttons/google-button";
 
 export const AuthPage = () => {
   return (
