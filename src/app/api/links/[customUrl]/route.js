@@ -26,7 +26,7 @@ export async function GET(req, { params }) {
 
     const geolocationApiRes = await fetch(`http://ip-api.com/json/${ip}?fields=16607`);
 
-    console.log(geolocationApiRes);
+    console.log(geolocationApiRes.json());
 
     if (geolocationApiRes.status !== "success") {
         const click = await prisma.click.create({
