@@ -6,9 +6,10 @@ import { prisma } from '@/lib/prisma';
 import { getDateRange } from '@/utils/getDateRange';
 
 export async function GET(req, { params }) {
+    const range = req.nextUrl.searchParams.get('range');
+    const role = req.nextUrl.searchParams.get('role');
+    
     try {
-        const range = req.nextUrl.searchParams.get('range');
-        const role = req.nextUrl.searchParams.get('role');
         const filters = {}
 
         const rolValidation = await validateUserRole(ROLES.ADMIN);
