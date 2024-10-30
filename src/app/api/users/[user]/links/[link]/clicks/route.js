@@ -1,6 +1,7 @@
 import { validateUserExistance } from "@/utils/user/validateUserExistance";
 import { validateUserSession } from "@/utils/user/validateUserSession";
 import { validateLinkExistanceByCustomUrl } from "@/utils/link/validateLinkExistanceByCustomUrl";
+import { validateLinkAuth } from "@/utils/link/validateLinkAuth";
 import { getDateRange } from "@/utils/getDateRange";
 import { getClicksGroupedByDay } from "@/utils/clicks/getClicksGroupedByDay";
 import { NextResponse } from "next/server";
@@ -16,6 +17,15 @@ export async function GET(req, { params }) {
         if (!validateSession.isValid) {
             return NextResponse.json({
                 error: validateSession.error
+            }, {
+                status: 401
+            });
+        }
+
+        const linkUserAuthValidation = await validateLinkAuth(customUrl, userId);
+        if (!linkUserAuthValidation.isValid) {
+            return NextResponse.json({
+                error: linkUserAuthValidation.error
             }, {
                 status: 401
             });
@@ -40,12 +50,6 @@ export async function GET(req, { params }) {
         }
 
         const { dateRange, rangeValue } = getDateRange(range);
-
-        console.log({
-            dateRange,
-            rangeValue,
-            range
-        })
 
         const { totalClicks, clicks } = await getClicksGroupedByDay({
             dateRange,

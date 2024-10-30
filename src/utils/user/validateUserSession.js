@@ -14,21 +14,6 @@ export const validateUserSession = async(userId) => {
         }
     }
 
-    // If the user ID in the session does not match the user ID in the URL, the user is trying to access another user's data
-    if (session.user.id !== userId) {
-        console.log("The user ID in the session does not match the user ID in the URL")
-        
-        console.log({
-            sessionUserId: session.user.id,
-            userId
-        })
-        
-        return {
-            isValid: false,
-            error: "Unauthorized"
-        }
-    }
-
     return {
         isValid: true
     }

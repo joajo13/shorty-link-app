@@ -30,10 +30,6 @@ export async function GET(req, { params }) {
 
         const geolocationApiResJson = await geolocationApiRes.json();
 
-        console.log({
-            geolocationApiResJson
-        });
-
         if (geolocationApiResJson.status === 'fail') {
             const click = await prisma.click.create({
                 data: {
@@ -41,12 +37,6 @@ export async function GET(req, { params }) {
                     ip: ip,
                 },
             });
-
-            console.log({
-                type: 'No geolocation data',
-                click
-            });
-
         } else {
             const click = await prisma.click.create({
                 data: {
@@ -60,11 +50,6 @@ export async function GET(req, { params }) {
                     longitude: geolocationApiResJson.lon,
                     ip: ip,
                 },
-            });
-
-            console.log({
-                type: 'With geolocation data',
-                click
             });
         }
 

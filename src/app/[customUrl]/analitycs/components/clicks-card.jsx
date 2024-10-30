@@ -19,17 +19,20 @@ import { RANGES } from "@/constants/rangeDates";
 export const ClicksCard = ({ customUrl }) => {
   const { data: session } = useSession();
   const [range, setRange] = useState(RANGES.LAST_7_DAYS);
+
   const { isLoading, clicks, totalClicks, trend } = useGetClicks(
     session?.user.id,
     customUrl,
     range
   );
+
   const chartConfig = {
     count: {
       label: "Clicks",
       color: "#27937e",
     },
   };
+
   const handleRangeChange = async (value) => {
     setRange(value);
   };
@@ -43,7 +46,7 @@ export const ClicksCard = ({ customUrl }) => {
             <CardDescription>Clicks on your link</CardDescription>
           </div>
 
-          <DateRangeSelect onChange={handleRangeChange} value={range} />
+          <DateRangeSelect onChange={handleRangeChange} placeholder="Select a range..." range={range} setRange={setRange}/>
         </div>
       </CardHeader>
 

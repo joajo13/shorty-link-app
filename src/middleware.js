@@ -1,13 +1,17 @@
 import { withAuth } from 'next-auth/middleware'
+import { ROLES } from '@/constants/roles.js'
 
 export default withAuth({
     callbacks: {
         authorized: async ({ req, token }) => {
-            if (token?.role === 'ADMIN') {
-                return true
-            }
+            const { pathname } = req.nextUrl
 
-            return !!token
+            if (pathname.startsWith('/dashboard')) return token?.role === ROLES.ADMIN
+
+            const analyticsRegex = /^\/[^\/]+\/analitycs$/;
+            if (analyticsRegex.test(pathname)) return !!token
+
+            return false
         },
     }
 })
